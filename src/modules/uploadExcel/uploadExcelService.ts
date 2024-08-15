@@ -5,10 +5,10 @@ import Subcategory from "../products/models/subCategory";
 const processData = async (data: any[]) => {
   for (const row of data) {
     const {
-      Name:websiteName,
+      Name: websiteName,
       Website: websiteURL,
       Category: categoryName,
-      Subcategory: subcategoryName,
+      SubCategory: subcategoryName,
     } = row as any;
 
     let website = await Website.findOne({ name: websiteName });
