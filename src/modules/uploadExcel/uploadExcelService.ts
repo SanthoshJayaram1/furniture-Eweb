@@ -9,6 +9,9 @@ const processData = async (data: any[]) => {
       Website: websiteURL,
       Category: categoryName,
       SubCategory: subcategoryName,
+      WebsiteCode: websiteCode,
+      CategoryCode: categoryCode,
+      SubCategoryCode: subcategoryCode,
     } = row as any;
 
     let website = await Website.findOne({ name: websiteName });
@@ -16,27 +19,31 @@ const processData = async (data: any[]) => {
       website = new Website({
         name: websiteName,
         url: websiteURL,
+        websiteCode
       });
       await website.save();
     }
 
     let category = await Category.findOne({
       name: categoryName,
-      website: website._id,
     });
     if (!category) {
-      category = new Category({ name: categoryName, website: website._id });
+      category = new Category({
+        name: categoryName,
+        website: website._id,
+        categoryCode,
+      });
       await category.save();
     }
 
     let subcategory = await Subcategory.findOne({
       name: subcategoryName,
-      category: category._id,
     });
     if (!subcategory) {
       subcategory = new Subcategory({
         name: subcategoryName,
         category: category._id,
+        subCategoryCode: subcategoryCode,
       });
       await subcategory.save();
     }
